@@ -11,7 +11,7 @@ class SalesDashboardPage {
     }
 
     getSalesOverview() {
-        return cy.get('.sales-overview');
+        return cy.get('.pt-5 > :nth-child(1)');
     }
 
     getSalesData() {

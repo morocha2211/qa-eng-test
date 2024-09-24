@@ -17,6 +17,6 @@ export default defineConfig({
     },
     specPattern: '**/*.feature',
     supportFile: false,
-    baseUrl: 'http://localhost:3001', // Cambia el puerto según tu configuración
+    baseUrl: 'http://localhost:3000', // Cambia el puerto según tu configuración
   },
 });
