@@ -26,6 +26,7 @@
       "pages/apps/todolist.tsx",
       "cypress/**/*.ts"   // Incluir los archivos de Cypress y TypeScript
     ],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "types": ["@simonsmith/cypress-image-snapshot/types"]
   }
   

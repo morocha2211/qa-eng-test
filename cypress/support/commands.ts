@@ -35,15 +35,19 @@
 //     }
 //   }
 // }
-import { addMatchImageSnapshot } from 'cypress-image-snapshot';
 
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      matchImageSnapshot(name: string, options?: any): Chainable<JQuery<HTMLElement>>;
+import {
+    addMatchImageSnapshotCommand
+} from '@simonsmith/cypress-image-snapshot/command';
+
+addMatchImageSnapshotCommand(
+    {
+        snapFilenameExtension: '.snap',
+        diffFilenameExtension: '.diff',
+        disableTimersAndAnimations: true,
+        failureThreshold: 0.1,
+        failureThresholdType: 'percent',
+        customSnapshotsDir: 'cypress/screenshots',
+        capture: 'fullPage',
     }
-  }
-}
-
-// Añadir el comando
-Cypress.Commands.add('matchImageSnapshot', addMatchImageSnapshot());
+)

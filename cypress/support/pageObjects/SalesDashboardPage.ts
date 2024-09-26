@@ -1,6 +1,9 @@
 class SalesDashboardPage {
     dateFilterSelector = '.date-filter';
     dateRangeSelector = '.date-range-selector';
+    widgetSelector = '.panel';
+    widgetTitleSelector = 'h5';
+    buttonSelector = '.btn-outline-primary';
 
     visit() {
         cy.visit('');
@@ -17,14 +20,58 @@ class SalesDashboardPage {
     getSalesData() {
         return cy.get('.sales-data');
     }
-    /**
-     * this function selects a date range option
-     * 
-     * @param range (string) range option that will selected.
-     */
-    selectDateRange(range:string) {
-        cy.get(this.dateFilterSelector).click(); // Ajusta el selector según tu diseño
-        cy.get(this.dateRangeSelector).select(range); // Cambia el valor según tus opciones
+
+    clickButton(buttonLabel: string) {
+        cy.contains(buttonLabel).click();
+    }
+
+    clickDashboardButton() {
+        cy.get(this.buttonSelector).click(); // Clicks the dashboard button
+    }
+
+    getWidgetByTitle(title: string) {
+        const widget = cy.get(this.widgetSelector)
+            .contains(this.widgetTitleSelector, title)
+            .closest(this.widgetSelector)
+            .as(title);
+
+        return new WidgetSalesDashboard(title);
+    }
+}
+
+class WidgetSalesDashboard {
+    aliasTitle: string = '';
+
+    constructor(aliasTitle: string) {
+        this.aliasTitle = `@${aliasTitle}`;
+    }
+    
+    validateTitle(title: string) { 
+        cy.get(this.aliasTitle).within(() => {
+            return cy.get('h5').contains(title);
+        });
+    }
+
+    clickDotMenu() {
+        cy.get(this.aliasTitle).within(() => {
+            cy.get('.dropdown button').click();
+        });
+    }
+
+    validateDotOptions(options: string[]) {
+        this.clickDotMenu();
+        
+        cy.get(this.aliasTitle).within(() => {
+            cy.get('.dropdown').within(() => {
+                options.forEach(option => {
+                    cy.contains(option).should('exist'); // Ensure each option exists
+                });    
+            });
+        });
+    }
+
+    validateChart() {
+        cy.get('div[id^="apexchart"]').should('exist');
     }
 }
 

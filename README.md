@@ -36,3 +36,32 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Running Tests and Generating Cypress Report
+
+To run the Cypress tests and generate a report, follow these steps:
+
+**Clean Previous Reports**: Before running the tests, it's a good idea to clean up any previous test reports. You can do this by running:
+
+```bash
+npm run clean-reports
+```
+**Run Cypress Tests**: 
+Execute the tests with the following command:
+
+```bash
+npm run cypress:run
+```
+
+**Generate the Report**:
+
+Once the tests have completed, generate the Mochawesome report using the command:
+
+```bash
+npm run generate-report
+```
+
+Alternatively, you can combine steps 1, 2, and 3 into a single command:
+```bash
+npm run test:report
+```

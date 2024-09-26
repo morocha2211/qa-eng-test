@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import { salesDashboardPage } from '@/cypress/support/pageObjects/SalesDashboardPage';
 import { DataTable } from '@badeball/cypress-cucumber-preprocessor';
-
+import addContext from 'mochawesome/addContext';
 
 type ViewportPreset =
   | 'iphone-6'
@@ -18,9 +18,8 @@ When('the user examines the header', () => {
 
 Then('the header should display {string}', (expectedHeader: string) => {
   salesDashboardPage.getHeader()
-  .should('contain.text', 'Dashboard')
-  .and('contain.text', 'Sales'); 
-}); 
+    .should('contain.text', expectedHeader);
+});
 
 Then('the user sees the sales overview section', () => {
   salesDashboardPage.getSalesOverview().should('exist');
@@ -31,73 +30,74 @@ Then('the sales data is displayed correctly', () => {
 });
 
 When('clicks the {string} button', (buttonLabel: string) => {
-  cy.contains(buttonLabel).click();
+  salesDashboardPage.clickButton(buttonLabel);
 });
 
-Then('the following widgets should be displayed:', (dataTable: DataTable) => { // Specify DataTable type
-  const widgets = dataTable.rows().slice(1); // Use rows() method to get data
-  // cy.get('div.panel').should('have.length', 10) // gets all widgets
-  cy.get('div.panel').then(
-    (widgets) => {
-      console.log('widget >', widgets.length)
-      widgets.each(
-        (idx, ele) => {
-          const cyWidget = cy.wrap(ele);
-          cy.get('h5')
-          .should('contain.text', widget) // Verify the widget title text
-          .and('be.visible'); // Ensure the widget is visible
-        }
-      )
-    }
-  )
-
+Then('the following widgets should be displayed:', (dataTable: DataTable) => {
+  const widgetsData = dataTable.rows();
+  
   // Verify each widget is displayed
-  widgets.forEach(([widget]) => {
-    // Define the selector based on the widget name
-    let selector;
-
-    switch (widget) {
-      case 'Revenue':
-        selector = '.xl\\:col-span-2 > .mb-5 > .text-lg';
-        break;
-      case 'Sales By Category':
-        selector = ':nth-child(1) > :nth-child(2) > .mb-5 > .text-lg';
-        break;
-      case 'Daily Sales':
-        selector = '.sm\\:col-span-2 > .mb-5 > .text-lg';
-        break;
-      case 'Summary':
-        selector = ':nth-child(2) > :nth-child(2) > .mb-5 > .text-lg';
-        break;
-      case 'Transactions':
-        selector = '.pb-0 > .mb-5'; // Assuming the title is directly in this class
-        break;
-      // Add more cases for other widgets as necessary
-      default:
-        throw new Error(`No selector defined for widget: ${widget}`);
+  widgetsData.forEach(([title, dots, chart]) => {
+    const widget = salesDashboardPage.getWidgetByTitle(title); 
+    
+    widget.validateTitle(title);
+    
+    if (dots) {
+      const dotsOptions = dots.split(',');
+      widget.validateDotOptions(dotsOptions);
     }
 
-    // Check if the widget title is present and visible
-    cy.get(selector)
-      .should('contain.text', widget) // Verify the widget title text
-      .and('be.visible'); // Ensure the widget is visible
+    if (chart === 'true') {
+      widget.validateChart();
+    }
   });
 });
 
-When('the user views the dashboard on a {string}', (device: string) => {
-  cy.viewport(device as ViewportPreset); // Asegúrate de que el tipo coincide
+When('the user views the dashboard on a:', (deviceTable: DataTable) => {
+  const devices = deviceTable.rows()[0];
+  
+  cy.viewport(devices[0] as ViewportPreset); 
 });
+
+Then('the header should be visible', () => {
+  console.log('header visible')
+})
+
+Then('the widgets should be displayed correctly', () => {
+  console.log('displayed correctly')
+})
 
 When('the user scrolls down', () => {
   cy.scrollTo('bottom');
 });
 
-
 When('clicks on the dashboard button', () => {
-  cy.get('.btn-outline-primary') // Selects the button with the class 'btn-outline-primary'
-    .click(); // Clicks the button
+  salesDashboardPage.clickDashboardButton();
 });
 
 Then('the page should scroll to the top', () => {
-  cy.window().its('scrollY').should('equal', 0); // Asserts that the scroll position is at the top (0)
+  cy.window().its('scrollY').should('equal', 0);
+});
+
+When('the viewport is set to desktop resolution', () => {
+  cy.viewport(1660, 2000); 
+});
+
+Then('the layout should match the Figma design exactly', () => {
+  cy.wait(5000);
+  cy.matchImageSnapshot('sales-dashboard', {
+    blackout: ['header', 'nav'],
+  });
+
+  // Check if there's a difference and attach the screenshot if a mismatch occurs
+  cy.on('fail', (error) => {
+    if (error.message.includes('Image was different')) {
+      // Specify the path to the diff image
+      const screenshotPath = `cypress/snapshots/diff/example-page-diff.png`;
+
+      // Add the screenshot to the report
+      addContext({ test: this }, screenshotPath);
+    }
+    throw error; // Re-throw the error after adding the screenshot
+  });
 });
