@@ -60,11 +60,11 @@ When('the user views the dashboard on a:', (deviceTable: DataTable) => {
 });
 
 Then('the header should be visible', () => {
-  console.log('header visible')
+  //ToDo: here we need to test specific mobile configuration.
 })
 
 Then('the widgets should be displayed correctly', () => {
-  console.log('displayed correctly')
+  //ToDo: here we need to test specific mobile configuration.
 })
 
 When('the user scrolls down', () => {

@@ -26,12 +26,12 @@ Feature: Vristo Sales Dashboard
     | Revenue                | Weekly,Monthly,Yearly                | true   |
     | Daily Sales            |                                      | true   |
     | Summary                | View Report,Edit Report,Mark as Done | false  |
-    | Sales By Category      |                                      | false   |
-    | Wallet Balance         |                                      | false   |
-    | Recent Activities      |                                      | false   |
-    | Transactions           |                                      | false   |
-    | Recent Orders          |                                      | false   | 
-    | Top Selling Product    |                                      | false   |
+    | Sales By Category      |                                      | false  |
+    | Wallet Balance         |                                      | false  |
+    | Recent Activities      |                                      | false  |
+    | Transactions           |                                      | false  |
+    | Recent Orders          |                                      | false  | 
+    | Top Selling Product    |                                      | false  |
 
 
     Scenario Outline: Verify that the design is displayed correctly on different mobile devices
