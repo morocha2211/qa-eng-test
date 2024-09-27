@@ -41,12 +41,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 To run the Cypress tests and generate a report, follow these steps:
 
-**Clean Previous Reports**: Before running the tests, it's a good idea to clean up any previous test reports. You can do this by running:
+**Clean Previous Reports**:
+
+Before running the tests, it's a good idea to clean up any previous test reports. You can do this by running:
 
 ```bash
 npm run clean-reports
 ```
 **Run Cypress Tests**: 
+
 Execute the tests with the following command:
 
 ```bash
