@@ -48,7 +48,7 @@ Feature: Vristo Sales Dashboard
     | iphone-3    |
 
 
-  Scenario: The design matches Figma on desktop
+    Scenario: The design matches Figma on desktop
      Given the user is on the sales dashboard page
      When the viewport is set to desktop resolution
      Then the layout should match the Figma design exactly

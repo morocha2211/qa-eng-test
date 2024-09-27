@@ -27,13 +27,13 @@ export default defineConfig({
     // report configuration
     reporter: 'mochawesome',
     reporterOptions: {
-      mochawesomeReporterOptions: {
-        reportDir: 'mochawesome-report',
-        quiet: true,
-        overwrite: false,
-        html: false,
-        json: true,
-      },
+      reportDir: 'mochawesome-report',
+      overwrite: false,
+      html: true,
+      json: true,
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      quiet: true,
     },
     screenshotsFolder: 'mochawesome-report/assets/',
     screenshotOnRunFailure: true

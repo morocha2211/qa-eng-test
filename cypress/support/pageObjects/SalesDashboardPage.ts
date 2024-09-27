@@ -26,7 +26,7 @@ class SalesDashboardPage {
     }
 
     clickDashboardButton() {
-        cy.get(this.buttonSelector).click(); // Clicks the dashboard button
+        cy.get(this.buttonSelector).click();
     }
 
     getWidgetByTitle(title: string) {
