@@ -1,3 +1,4 @@
+@smoke
 Feature: Vristo Sales Dashboard
 
   Background:
@@ -10,6 +11,7 @@ Feature: Vristo Sales Dashboard
     Then the header should display "DashboardSales"
     And the user sees the sales overview section
 
+  @dashboard
     Scenario:Validate that the dashboard button scrolls up to the top correctly
     When the user scrolls down
     And clicks on the dashboard button
@@ -33,7 +35,7 @@ Feature: Vristo Sales Dashboard
     | Recent Orders          |                                      | false  | 
     | Top Selling Product    |                                      | false  |
 
-
+    @design
     Scenario Outline: Verify that the design is displayed correctly on different mobile devices
     When the user views the dashboard on a:
     | Device   |
@@ -47,7 +49,7 @@ Feature: Vristo Sales Dashboard
     | iphone-6    |
     | iphone-3    |
 
-
+    @design
     Scenario: The design matches Figma on desktop
      Given the user is on the sales dashboard page
      When the viewport is set to desktop resolution

@@ -68,3 +68,15 @@ Alternatively, you can combine steps 1, 2, and 3 into a single command:
 ```bash
 npm run test:report
 ```
+
+## Running Cypress Tests with Tags
+
+You can run specific test cases using tags with Cypress by passing the `--env TAGS` option.
+
+### Usage Example
+
+To run tests that have the `@smoke` or `@dashboard` tags, use the following command:
+
+```bash
+npx cypress run --env TAGS='@smoke or @dashboard'
+```

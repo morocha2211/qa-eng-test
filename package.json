@@ -9,6 +9,7 @@
     "lint": "next lint",
     "cypress": "npx cypress open",
     "cypress:run": "npx cypress run",
+    "cypress:run:smoke": "cypress run --env TAGS='@smoke'",
     "clean-reports": "rm -rf mochawesome-report",
     "generate-report": "npx mochawesome-report-generator cypress/mochawesome-report/*.json -o cypress/mochawesome-report/report.html",
     "test": "npm run clean-reports && npm run cypress:run",
